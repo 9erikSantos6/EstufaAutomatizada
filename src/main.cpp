@@ -23,5 +23,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.println(int(sensorTemp.captarTemperatura()));Serial.print("°");
+  delay(sensorTemp.pegarDelay());
+  Serial.println(int(sensorTemp.captarTemperatura()));
+  Serial.print("°");
 }
