@@ -9,7 +9,7 @@ Este projeto implementa uma estufa automatizada utilizando placas Arduino, proje
 - **Teto Retrátil Automatizado:** Acionado por motores de passo, o teto retrátil permite o controle de exposição à luz e ventilação, melhorando as condições internas de acordo com os dados dos sensores.
   
 ## Estrutura do Projeto
-
+```
 EstufaAutomatizada/
 ┣ include/
 ┃ ┣ MotorPassos.h               # Cabeçalho para controle de motores de passo
@@ -32,7 +32,7 @@ EstufaAutomatizada/
 ┣ .editorconfig                  # Configuração de editor
 ┣ .gitignore                     # Arquivos e pastas a serem ignorados pelo Git
 ┗ platformio.ini                 # Configurações do PlatformIO
-
+```
 ## Requisitos
 
 - **Hardware:**
