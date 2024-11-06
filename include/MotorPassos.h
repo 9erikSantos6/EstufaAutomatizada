@@ -16,7 +16,7 @@ class MotorPassos {
 
     void mostrarInformacoes();
 
-    int definirRpm();
+    void definirRpm(int rpm);
 
     void definirSentidoHorario();
     void definirSentidoAntiHorario();

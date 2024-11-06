@@ -18,6 +18,10 @@ void MotorPassos::definirSentidoHorario() {
   this->sentidoHorario = true;
 }
 
+void MotorPassos::definirRpm(int rpm) {
+  this->stepper.setRpm(rpm);
+}
+
 void MotorPassos::definirSentidoAntiHorario() {
   this->sentidoHorario = false;
 }
@@ -26,18 +30,12 @@ void MotorPassos::moverParaStep(int step) {
   if (0 <= step && step <= 2048) {
     stepper.moveDegrees(sentidoHorario, step);
   }
-  Serial.print("Erro ao mover motor: ");
-  Serial.print(step);
-  Serial.print("step inválido!");
 }
 
 void MotorPassos::moverParaGrau(int grau) {
   if (0 <= grau && grau <= 360) {
     stepper.moveDegrees(sentidoHorario, grau);
   }
-  Serial.print("Erro ao mover motor: ");
-  Serial.print(grau);
-  Serial.print("° inválido!");
 }
 
 int MotorPassos::pegarPosicaoAtual() {
