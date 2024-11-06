@@ -11,7 +11,7 @@
 #include "SensorTemperatura.h"
 
 #define DHTPIN 2
-#define DHTTYPE DHT22
+#define DHTTYPE DHT11
 
 SensorTemperatura sensorTemp(DHTPIN, DHTTYPE);
 
@@ -23,5 +23,5 @@ void setup() {
 }
 
 void loop() {
-  Serial.println(sensorTemp.captarTemperatura());
+  Serial.println(int(sensorTemp.captarTemperatura()));Serial.print("°");
 }
