@@ -14,6 +14,7 @@ class MultiMotor{
         MultiMotor(MotorPassos* motores, int quantidadeMotores, int grauDestino, int grauPorMovimento);
         void moverMotoresEmSincronia();
 
+
 };
 
 
