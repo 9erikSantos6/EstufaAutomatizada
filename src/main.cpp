@@ -8,10 +8,6 @@
 #include "SensorHumidadeSolo.h"
 #include "Rele.h"
 
-
-// (uint8_t rs, uint8_t enable,
-//                  uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
-//                  uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
 #define RS 30
 #define EN 31
 #define D0 32
@@ -25,11 +21,15 @@
 #define LCD_WIDTH 16
 #define LCD_HEIGHT 2
 
+#define PINO_SENSOR_TEMPERATURA 2
+#define PINO_SENSOR_HUMIDADE_SOLO 3
+#define PINO_RELE 8
+
 LiquidCrystal lcd(RS, EN, D0, D1, D2, D3, D4, D5, D6, D7); 
 BigCrystal displayLcd(&lcd);
-SensorTemperatura sensorTemperatura(2, DHT11);
-SensorHumidadeSolo sensorHumidadeSolo(3);
-Rele rele(8);
+SensorTemperatura sensorTemperatura(PINO_SENSOR_TEMPERATURA, DHT11);
+SensorHumidadeSolo sensorHumidadeSolo(PINO_SENSOR_HUMIDADE_SOLO);
+Rele rele(PINO_RELE);
 
 int temperaturaEstufa;
 int humidadeEstufa;
