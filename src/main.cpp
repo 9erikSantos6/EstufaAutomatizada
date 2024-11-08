@@ -1,35 +1,55 @@
 #include <Arduino.h>
 #include <Wire.h>
-// #include <BigCrystal.h>
-// #include <LiquidCrystal.h>
+#include <BigCrystal.h>
+#include <LiquidCrystal.h>
+#include "MotorPassos.h"
+#include "MultiMotor.h"
+#include "SensorTemperatura.h"
+#include "SensorHumidadeSolo.h"
+#include "Rele.h"
 
-// LiquidCrystal lcd(30, 31, 32, 33, 34, 35, 36, 37, 38, 39); 
-// BigCrystal bigCrystal(&lcd);
 
-// int temperaturaSimulada = 0;
-// int humidadeSimulada = 50;
+// (uint8_t rs, uint8_t enable,
+//                  uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
+//                  uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7)
+#define RS 30
+#define EN 31
+#define D0 32
+#define D1 33
+#define D2 34
+#define D3 35
+#define D4 36
+#define D5 37
+#define D6 38
+#define D7 39
+#define LCD_WIDTH 16
+#define LCD_HEIGHT 2
 
-#include <MotorPassos.h>
-#include <MultiMotor.h>
+LiquidCrystal lcd(RS, EN, D0, D1, D2, D3, D4, D5, D6, D7); 
+BigCrystal displayLcd(&lcd);
+SensorTemperatura sensorTemperatura(2, DHT11);
+SensorHumidadeSolo sensorHumidadeSolo(3);
+Rele rele(8);
 
-MotorPassos motorPassos1(2, 3, 4, 5);
-MotorPassos motorPassos2(8, 9, 10, 11);
-MotorPassos motores[2] = {motorPassos1, motorPassos2};
-MultiMotor multiMotor(motores, 2, 360, 4);
+int temperaturaEstufa;
+int humidadeEstufa;
 
 void setup() {
-    // bigCrystal.begin(16, 2);
-
-
-  }
+    displayLcd.begin(LCD_WIDTH, LCD_HEIGHT);
+    sensorHumidadeSolo.init();
+    sensorTemperatura.init();
+    sensorHumidadeSolo.init();
+    rele.init();
+}
 
 void loop() {
-  // bigCrystal.print("Temperatura: ");bigCrystal.print(temperaturaSimulada);bigCrystal.print("oC");bigCrystal.setCursor(0, 1);
-  // bigCrystal.print("Humidade: ");bigCrystal.print(humidadeSimulada);bigCrystal.print("%");
+  displayLcd.print("Temperatura: ");displayLcd.print(temperaturaEstufa);displayLcd.print("oC");displayLcd.setCursor(0, 1);
+  displayLcd.print("Humidade: ");displayLcd.print(humidadeEstufa);displayLcd.print("%");
 
-  // temperaturaSimulada += 1;
-  // delay(2000);
-  // bigCrystal.clear();                                                                                                        
+  temperaturaEstufa = sensorTemperatura.captarTemperatura();
+  humidadeEstufa = sensorTemperatura.captarHumidade();
 
-  multiMotor.moverMotoresEmSincronia();
+  sensorHumidadeSolo.gerenciarRele(rele);
+  delay(2000);
+  displayLcd.clear();
 }
