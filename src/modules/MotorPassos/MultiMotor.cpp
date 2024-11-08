@@ -6,7 +6,7 @@ Ainda não implementado
 #include "MultiMotor.h"
 
 MultiMotor::MultiMotor(MotorPassos* motores, int quantidadeMotores, int grauDestino, int grauPorMovimento)
-    : motores(motores), quantidadeMotores(quantidadeMotores), grauDestino(grauDestino), grauPorMovimento(grauPorMovimento) {}
+    : motores(motores), quantidadeMotores(quantidadeMotores), grauDestino(grauDestino*2), grauPorMovimento(grauPorMovimento) {}
 
 void MultiMotor::moverMotoresEmSincronia() {
     if (this->grauDestino > 0) {
