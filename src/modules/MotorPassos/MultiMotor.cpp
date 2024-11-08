@@ -1,6 +1,5 @@
 /*
 Ainda não implementado
-
 */
 
 #include <Arduino.h>

@@ -2,6 +2,7 @@
 #define __SENSOR_HUMIDADE_SOLO_
 
 #include <Arduino.h>
+#include "Rele.h"
 
 class SensorHumidadeSolo {
     private: 
@@ -12,6 +13,8 @@ class SensorHumidadeSolo {
 
         void init();
         boolean getPortValue();
+        void ativarQuando();
+        void gerenciarRele(Rele rele);
 };
 
 #endif
