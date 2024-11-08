@@ -1,7 +1,6 @@
 #include "MotorPassos.h"
 #include <Arduino.h>
 
-
 MotorPassos::MotorPassos(uint8_t port1, uint8_t port2, uint8_t port3, uint8_t port4)
   : stepper(port1, port2, port3, port4), sentidoHorario(true) {}
 
