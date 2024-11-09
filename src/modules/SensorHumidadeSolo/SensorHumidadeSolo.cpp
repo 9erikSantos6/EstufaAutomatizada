@@ -17,9 +17,9 @@ boolean SensorHumidadeSolo::getPortValue() {
 }
 
 void SensorHumidadeSolo::gerenciarRele(Rele rele) {
-    if (this->getPortValue() && !rele.estaLigado()) { 
+    if (!this->getPortValue() && !rele.estaLigado()) { 
       rele.ligar();
-    } else if (!this->getPortValue() && rele.estaLigado()) {
+    } else if (this->getPortValue() && rele.estaLigado()) {
       rele.desligar();
     }
 }
