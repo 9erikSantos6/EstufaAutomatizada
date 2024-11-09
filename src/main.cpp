@@ -1,7 +1,6 @@
 #include <Arduino.h>
-#include <Wire.h>
-#include <BigCrystal.h>
 #include <LiquidCrystal.h>
+#include "EstufaLcdDisplay.h"
 #include "MotorPassos.h"
 #include "MultiMotor.h"
 #include "SensorTemperatura.h"
@@ -26,7 +25,7 @@
 #define PINO_RELE 8
 
 LiquidCrystal lcd(RS, EN, D0, D1, D2, D3, D4, D5, D6, D7); 
-BigCrystal displayLcd(&lcd);
+EstufaLcdDisplay displayLcd(&lcd);
 SensorTemperatura sensorTemperatura(PINO_SENSOR_TEMPERATURA, DHT11);
 SensorHumidadeSolo sensorHumidadeSolo(PINO_SENSOR_HUMIDADE_SOLO);
 Rele rele(PINO_RELE);
@@ -40,15 +39,15 @@ void setup() {
     sensorTemperatura.init();
     sensorHumidadeSolo.init();
     rele.init();
+
+    temperaturaEstufa = sensorTemperatura.captarTemperatura();
+    humidadeEstufa = sensorTemperatura.captarHumidade();
 }
 
 void loop() {
-  displayLcd.print("Temperatura: ");displayLcd.print(temperaturaEstufa);displayLcd.print("oC");displayLcd.setCursor(0, 1);
-  displayLcd.print("Humidade: ");displayLcd.print(humidadeEstufa);displayLcd.print("%");
-
+  displayLcd.mostrarClimaEstufa(temperaturaEstufa, humidadeEstufa);
   temperaturaEstufa = sensorTemperatura.captarTemperatura();
   humidadeEstufa = sensorTemperatura.captarHumidade();
-
   sensorHumidadeSolo.gerenciarRele(rele);
   delay(2000);
   displayLcd.clear();
