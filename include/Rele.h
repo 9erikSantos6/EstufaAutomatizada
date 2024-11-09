@@ -5,7 +5,7 @@
 class Rele {
   private:
     uint8_t port;
-    bool estadoLigado;
+    bool estadoRele;
 
   public:
     Rele(uint8_t port);
@@ -13,7 +13,7 @@ class Rele {
     void init();
     void ligar();
     void desligar();
-    bool estaLigado();
+    bool estado();
 };
 
 #endif

@@ -1,7 +1,4 @@
-#include <SensorTemperatura.h>
-#include <Arduino.h>
-#include <DHT.h>
-#include <DHT_U.h>
+#include "SensorTemperatura.h"
 
 SensorTemperatura::SensorTemperatura(uint8_t port, uint8_t dhttype) 
   : dht(port, dhttype) {}
@@ -22,20 +19,16 @@ float SensorTemperatura::captarTemperatura() {
     Serial.println(F("Erro ao ler temperatura!"));
     return NAN;
   }
-  else {
-    return this->event.temperature;
-  }
+  return this->event.temperature;
 }
 
 float SensorTemperatura::captarHumidade() {
-dht.humidity().getEvent(&this->event);
+  dht.humidity().getEvent(&this->event);
   if (isnan(event.relative_humidity)) {
     Serial.println(F("Erro ao ler humidade!"));
     return NAN;
   }
-  else {
-    return this->event.relative_humidity;
-  }
+  return this->event.relative_humidity;
 }
 
 void SensorTemperatura::mostrarInformacoes() {
@@ -60,5 +53,3 @@ void SensorTemperatura::mostrarInformacoes() {
   Serial.print  (F("Resolução:  ")); Serial.print(this->sensor.resolution); Serial.println(F("%"));
   Serial.println(F("------------------------------------"));
 }
-
-

@@ -1,8 +1,7 @@
-#include <Arduino.h>
 #include "MultiMotor.h"
 
 MultiMotor::MultiMotor(MotorPassos* motores, int quantidadeMotores, int grauDestino, int grauPorMovimento)
-    : motores(motores), quantidadeMotores(quantidadeMotores), grauDestino(grauDestino*2), grauPorMovimento(grauPorMovimento) {}
+    : motores(motores), quantidadeMotores(quantidadeMotores), grauDestino(grauDestino), grauPorMovimento(grauPorMovimento) {}
 
 void MultiMotor::moverMotoresEmSincronia() {
     if (this->grauDestino > 0 && grauPorMovimento < grauDestino / 4) {

@@ -1,11 +1,10 @@
 #include <Arduino.h>
-#include <LiquidCrystal.h>
 #include "EstufaLcdDisplay.h"
 #include "MotorPassos.h"
 #include "MultiMotor.h"
 #include "SensorTemperatura.h"
 #include "SensorHumidadeSolo.h"
-#include "Rele.h"
+#include "BombaIrrigacao.h"
 
 #define RS 30
 #define EN 31
@@ -22,33 +21,33 @@
 
 #define PINO_SENSOR_TEMPERATURA 2
 #define PINO_SENSOR_HUMIDADE_SOLO 3
-#define PINO_RELE 8
+#define PINO_BOMBA_IRRIGACAO 8
 
-LiquidCrystal lcd(RS, EN, D0, D1, D2, D3, D4, D5, D6, D7); 
-EstufaLcdDisplay displayLcd(&lcd);
+EstufaLcdDisplay displayLcd(RS, EN, D0, D1, D2, D3, D4, D5, D6, D7);
 SensorTemperatura sensorTemperatura(PINO_SENSOR_TEMPERATURA, DHT11);
 SensorHumidadeSolo sensorHumidadeSolo(PINO_SENSOR_HUMIDADE_SOLO);
-Rele rele(PINO_RELE);
+BombaIrrigacao bombaIrrigacao(PINO_BOMBA_IRRIGACAO);
 
 int temperaturaEstufa;
 int humidadeEstufa;
 
 void setup() {
     displayLcd.begin(LCD_WIDTH, LCD_HEIGHT);
-    sensorHumidadeSolo.init();
     sensorTemperatura.init();
     sensorHumidadeSolo.init();
-    rele.init();
+    bombaIrrigacao.init();
 
     temperaturaEstufa = sensorTemperatura.captarTemperatura();
     humidadeEstufa = sensorTemperatura.captarHumidade();
+
+    delay(500);
 }
 
 void loop() {
   displayLcd.mostrarClimaEstufa(temperaturaEstufa, humidadeEstufa);
   temperaturaEstufa = sensorTemperatura.captarTemperatura();
   humidadeEstufa = sensorTemperatura.captarHumidade();
-  sensorHumidadeSolo.gerenciarRele(rele);
-  delay(2000);
+  sensorHumidadeSolo.controlarBombaIrrigacao(bombaIrrigacao);
+  delay(3000);
   displayLcd.clear();
 }
