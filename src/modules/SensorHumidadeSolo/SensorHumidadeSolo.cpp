@@ -1,25 +1,20 @@
-#include <Arduino.h>
-#include <DHT.h>
-#include <DHT_U.h>
 #include  "SensorHumidadeSolo.h"
-#include "Rele.h"
+#include "BombaIrrigacao.h"
 
-SensorHumidadeSolo::SensorHumidadeSolo(uint8_t port) {
-    this->port = port;
-}
+SensorHumidadeSolo::SensorHumidadeSolo(uint8_t port) : port(port) {}
 
 void SensorHumidadeSolo::init() {
     pinMode(port, INPUT);
 }
 
-boolean SensorHumidadeSolo::getPortValue() {
+boolean SensorHumidadeSolo::soloSeco() {
     return analogRead(this->port);
 }
 
-void SensorHumidadeSolo::gerenciarRele(Rele rele) {
-    if (!this->getPortValue() && !rele.estaLigado()) { 
-      rele.ligar();
-    } else if (this->getPortValue() && rele.estaLigado()) {
-      rele.desligar();
+void SensorHumidadeSolo::controlarBombaIrrigacao(BombaIrrigacao bomba) {
+    if (this->soloSeco() && !bomba.estadoBomba()) { 
+      bomba.iniciarIrrigacao();
+    } else if (!this->soloSeco() && bomba.estadoBomba()) {
+      bomba.pararIrrigacao();
     }
 }

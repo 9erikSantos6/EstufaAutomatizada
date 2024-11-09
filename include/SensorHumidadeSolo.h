@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "Rele.h"
+#include "BombaIrrigacao.h"
 
 class SensorHumidadeSolo {
     private: 
@@ -12,9 +13,8 @@ class SensorHumidadeSolo {
         SensorHumidadeSolo(uint8_t port);
 
         void init();
-        boolean getPortValue();
-        void ativarQuando();
-        void gerenciarRele(Rele rele);
+        bool soloSeco();
+        void controlarBombaIrrigacao(BombaIrrigacao bomba);
 };
 
 #endif
