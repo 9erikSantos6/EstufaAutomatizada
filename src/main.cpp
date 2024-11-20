@@ -1,5 +1,7 @@
 #include <Arduino.h>
-#include "EstufaLcdDisplay.h"
+#include <LiquidCrystal.h>
+#include <BigCrystal.h>
+
 #include "MotorPassos.h"
 #include "MultiMotor.h"
 #include "SensorTemperatura.h"
@@ -23,7 +25,9 @@
 #define PINO_SENSOR_HUMIDADE_SOLO 3
 #define PINO_BOMBA_IRRIGACAO 8
 
-EstufaLcdDisplay displayLcd(RS, EN, D0, D1, D2, D3, D4, D5, D6, D7);
+LiquidCrystal display(RS, EN, D0, D1, D2, D3, D4, D5, D6, D7);
+BigCrystal displayLcd(&display);
+
 SensorTemperatura sensorTemperatura(PINO_SENSOR_TEMPERATURA, DHT11);
 SensorHumidadeSolo sensorHumidadeSolo(PINO_SENSOR_HUMIDADE_SOLO);
 BombaIrrigacao bombaIrrigacao(PINO_BOMBA_IRRIGACAO);
@@ -44,10 +48,18 @@ void setup() {
 }
 
 void loop() {
-  displayLcd.mostrarClimaEstufa(temperaturaEstufa, humidadeEstufa);
+  displayLcd.print("Temperatura: ");
+  displayLcd.print(temperaturaEstufa);
+  displayLcd.print("oC");
+  displayLcd.setCursor(0, 1);
+  displayLcd.print("Humidade: ");
+  displayLcd.print(humidadeEstufa);
+  displayLcd.print("%");
+
   temperaturaEstufa = sensorTemperatura.captarTemperatura();
   humidadeEstufa = sensorTemperatura.captarHumidade();
   sensorHumidadeSolo.controlarBombaIrrigacao(bombaIrrigacao);
+
   delay(3000);
   displayLcd.clear();
 }
