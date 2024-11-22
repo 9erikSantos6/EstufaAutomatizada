@@ -13,7 +13,7 @@ class SensorHumidadeSolo {
         SensorHumidadeSolo(uint8_t port);
 
         void init();
-        bool soloSeco();
+        bool soloHumido();
         void controlarBombaIrrigacao(BombaIrrigacao bomba);
 };
 

@@ -13,3 +13,5 @@ bool Botao::pegarEstado() {
   }
   return LOW;
 }
+
+// void Botao::controlarEstado()

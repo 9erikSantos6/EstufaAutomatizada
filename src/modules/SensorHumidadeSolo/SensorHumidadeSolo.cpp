@@ -7,14 +7,16 @@ void SensorHumidadeSolo::init() {
     pinMode(port, INPUT);
 }
 
-boolean SensorHumidadeSolo::soloSeco() {
-    return analogRead(this->port);
+boolean SensorHumidadeSolo::soloHumido() {
+    return digitalRead(this->port);
 }
 
 void SensorHumidadeSolo::controlarBombaIrrigacao(BombaIrrigacao bomba) {
-    if (this->soloSeco() && !bomba.estadoBomba()) { 
+    if (!this->soloHumido()/*&& !bomba.estadoBomba()*/) { 
       bomba.iniciarIrrigacao();
-    } else if (!this->soloSeco() && bomba.estadoBomba()) {
+      Serial.println("BOMBA DESLIGADA");
+    } else if (this->soloHumido() /*&& bomba.estadoBomba()*/) {
       bomba.pararIrrigacao();
+      Serial.println("BOMBA LIGADA");
     }
 }
